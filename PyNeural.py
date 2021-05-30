@@ -69,7 +69,7 @@ class PyNeural(object):
                 cache += self.hiddens[hidden_neural]*self.w2[hidden_neural]
         cache /= len(self.hiddens)
         del hidden_neural
-        return round(cache, self.round)
+        return int(cache)
     def PredictValue(self):
         self.inputs.append(self.output)
         return self.c()
