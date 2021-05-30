@@ -54,6 +54,7 @@ class PyNeural(object):
         while self.current_output != self.output:
             self.SetWeights()
             self.current_output = self.c()
+            print(abs(self.output-self.current_output))
             sleep(self.delay_time)
     def c(self):
         for hidden_neural in range(len(self.hiddens)):
