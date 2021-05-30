@@ -22,7 +22,7 @@ class PyNeural(object):
         self.db = _cache
         self.k = 5
         self.round = 2
-        self.delay_time = .1
+        self.delay_time = .05
         del _cache
         self.SetWeights()
         self.Recap()
@@ -54,7 +54,6 @@ class PyNeural(object):
         while self.current_output != self.output:
             self.SetWeights()
             self.current_output = self.c()
-            print(self.current_output)
             sleep(self.delay_time)
     def c(self):
         for hidden_neural in range(len(self.hiddens)):
