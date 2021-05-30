@@ -72,4 +72,5 @@ class PyNeural(object):
         return int(cache)
     def PredictValue(self):
         self.inputs.append(self.output)
+        del self.inputs[0]
         return self.c()
