@@ -5,7 +5,6 @@ class CSV(object):
         self.datas = []
         if not self.IsCorrectFile(path):
             print("[CSV] Incorrect file/path!")
-            exit()
         else: self.path = path
     def IsCorrectFile(self, path):
         try:
@@ -14,10 +13,10 @@ class CSV(object):
             self.CorrectFile = True
             return True
         except: return False
+    def ReadyToRead(self): return self.CorrectFile
     def ReadData(self):
         if not self.CorrectFile:
             print("You can't read datas from no file!")
-            exit()
         else:
             file = open(self.path, "r")
             l = file.readlines()
