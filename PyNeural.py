@@ -6,7 +6,7 @@ class PyNeural(object):
         self.csv = CSV(csv_file)
         if not self.csv.ReadyToRead(): exit()
         else: self.datas = self.csv.ReadData()
-        print(self.datas)
+        #print(self.datas)
         '''
         The last data is the output for the training
         '''
@@ -14,7 +14,7 @@ class PyNeural(object):
         del self.datas[len(self.datas)-1]
         self.inputs = self.datas
         del self.datas
-        self.hiddens = [0.00, 0.00, 0.00, 0.00, 0.00]
+        self.hiddens = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
         self.w1 = []
         self.w2 = []
         _cache = self.GetDeltaInInputs()
@@ -22,7 +22,7 @@ class PyNeural(object):
         self.db = _cache
         self.k = 5
         self.round = 2
-        self.delay_time = .05
+        self.delay_time = 0
         del _cache
         self.SetWeights()
         self.Recap()
@@ -44,12 +44,13 @@ class PyNeural(object):
         for i in range(0, len(self.inputs)*len(self.hiddens)): self.w1.append(self.w())
         for i in range(0, len(self.hiddens)): self.w2.append(self.w())
     def Recap(self):
-        print("Recapping the training : ")
-        print("\t- inputs => " + str(self.inputs))
-        print("\t- output => " + str(self.output))
-        print("\t- hidden neurals number => " + str(len(self.hiddens)))
+        #print("Recapping the training : ")
+        #print("\t- inputs => " + str(self.inputs))
+        #print("\t- output => " + str(self.output))
+        #print("\t- hidden neurals number => " + str(len(self.hiddens)))
+        pass
     def Train(self):
-        print("Training network ...")
+        #print("Training network ...")
         self.current_output = self.c()
         while self.current_output != self.output:
             self.SetWeights()
@@ -71,6 +72,18 @@ class PyNeural(object):
         del hidden_neural
         return int(cache)
     def PredictValue(self):
-        self.inputs.append(self.output)
+        self.inputs.append(self.current_output)
         del self.inputs[0]
-        return self.c()
+        self.current_output = self.c()
+        return self.current_output
+    def BigTrain(self, n):
+        for i in range(0, n):
+            self.SetWeights()
+            self.Train()
+            self.inputs.append(self.output)
+            cache = self.inputs[0]
+            del self.inputs[0]
+            self.prediction = self.c()
+            self.inputs.insert(0, cache)
+            self.output = self.prediction
+            print(str(i) + " => " + str(self.prediction))           
